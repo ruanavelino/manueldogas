@@ -568,6 +568,39 @@ footer {
     margin-bottom: 15px;
 }
 
+/* Desktop footer layout improvements */
+@media (min-width: 601px) {
+    .footer-content {
+        flex-wrap: nowrap;
+        gap: 20px;
+    }
+    
+    .footer-logo {
+        flex: 0 0 25%;
+        margin-bottom: 0;
+    }
+    
+    .footer-info {
+        flex: 0 0 40%;
+        text-align: left;
+        padding-left: 0;
+    }
+    
+    .social-media-section {
+        flex: 0 0 25%;
+        align-items: flex-end;
+    }
+    
+    .social-title {
+        text-align: right;
+        width: 100%;
+    }
+    
+    .footer-copyright {
+        margin-top: 10px;
+    }
+}
+
 .footer-logo {
     display: flex;
     align-items: center;
@@ -600,6 +633,20 @@ footer {
 .footer-info p {
     margin: 5px 0;
     font-size: 0.9rem;
+}
+
+.social-media-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #F3AC24;
+    text-align: center;
 }
 
 .social-icons {

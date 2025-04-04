@@ -85,8 +85,13 @@ function formatCurrency(value) {
 function makeProductCardsClickable() {
     // Make the entire card clickable
     document.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', function(e) {
+        // Usar 'pointerup' em vez de 'click' para melhor compatibilidade com dispositivos móveis
+        card.addEventListener('pointerup', function(e) {
             const checkbox = this.querySelector('.product-checkbox');
+            
+            // Prevenimos a propagação para evitar múltiplos eventos
+            e.preventDefault();
+            e.stopPropagation();
             
             // Toggle the checkbox state
             checkbox.checked = !checkbox.checked;
@@ -161,6 +166,15 @@ function setupEventListeners() {
 
 function toggleProductCard(checkbox) {
     const card = checkbox.closest('.product-card');
+    
+    // Forçamos uma remoção de todas as classes 'active' primeiro para garantir estado limpo
+    document.querySelectorAll('.product-card').forEach(c => {
+        if (c.querySelector('.product-checkbox').id === checkbox.id && !checkbox.checked) {
+            c.classList.remove('active');
+        }
+    });
+    
+    // Então aplicamos o estado correto baseado no checkbox
     if (checkbox.checked) {
         card.classList.add('active');
     } else {
