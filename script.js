@@ -86,9 +86,6 @@ function makeProductCardsClickable() {
     // Make the entire card clickable
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function(e) {
-            // Evita clicar no checkbox diretamente para prevenir duplo toggle
-            if (e.target.type === 'checkbox') return;
-            
             const checkbox = this.querySelector('.product-checkbox');
             
             // Toggle the checkbox state
@@ -163,11 +160,7 @@ function setupEventListeners() {
 }
 
 function toggleProductCard(checkbox) {
-    // Encontrar todos os cards relacionados a este checkbox
-    const allCards = document.querySelectorAll('.product-card');
     const card = checkbox.closest('.product-card');
-    
-    // Defina o estado visual baseado no estado do checkbox
     if (checkbox.checked) {
         card.classList.add('active');
     } else {
