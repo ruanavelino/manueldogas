@@ -363,6 +363,7 @@ textarea {
     color: white;
     cursor: pointer;
     transition: all 0.2s;
+    min-height: 70px; /* Garantir altura mínima para todos os cards */
 }
 
 .brand-label:hover {
@@ -371,6 +372,9 @@ textarea {
 
 .brand-name {
     font-weight: 500;
+    white-space: nowrap; /* Impedir quebra de linha no nome */
+    font-size: 0.85rem; /* Reduzir um pouco o tamanho da fonte */
+    margin-bottom: 4px; /* Espaçamento entre o nome e o preço */
 }
 
 .brand-price {
