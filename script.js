@@ -85,13 +85,11 @@ function formatCurrency(value) {
 function makeProductCardsClickable() {
     // Make the entire card clickable
     document.querySelectorAll('.product-card').forEach(card => {
-        // Usar 'pointerup' em vez de 'click' para melhor compatibilidade com dispositivos móveis
-        card.addEventListener('pointerup', function(e) {
-            const checkbox = this.querySelector('.product-checkbox');
+        card.addEventListener('click', function(e) {
+            // Evita clicar no checkbox diretamente para prevenir duplo toggle
+            if (e.target.type === 'checkbox') return;
             
-            // Prevenimos a propagação para evitar múltiplos eventos
-            e.preventDefault();
-            e.stopPropagation();
+            const checkbox = this.querySelector('.product-checkbox');
             
             // Toggle the checkbox state
             checkbox.checked = !checkbox.checked;
@@ -165,16 +163,11 @@ function setupEventListeners() {
 }
 
 function toggleProductCard(checkbox) {
+    // Encontrar todos os cards relacionados a este checkbox
+    const allCards = document.querySelectorAll('.product-card');
     const card = checkbox.closest('.product-card');
     
-    // Forçamos uma remoção de todas as classes 'active' primeiro para garantir estado limpo
-    document.querySelectorAll('.product-card').forEach(c => {
-        if (c.querySelector('.product-checkbox').id === checkbox.id && !checkbox.checked) {
-            c.classList.remove('active');
-        }
-    });
-    
-    // Então aplicamos o estado correto baseado no checkbox
+    // Defina o estado visual baseado no estado do checkbox
     if (checkbox.checked) {
         card.classList.add('active');
     } else {
