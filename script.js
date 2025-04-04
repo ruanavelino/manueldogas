@@ -25,7 +25,7 @@ const PRODUCT_PRICES = {
 };
 
 // Phone number for WhatsApp
-const whatsappNumber = '5581999993231'; // Format: country code + number without special chars
+const whatsappNumber = '5581971202071'; // Format: country code + number without special chars
 
 // Initialize input masks and event listeners
 document.addEventListener('DOMContentLoaded', function() {
