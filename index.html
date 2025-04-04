@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">Telefone*</label>
-                        <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" required>
+                        <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" maxlength="15" required>
                     </div>
                 </div>
 
@@ -58,31 +58,109 @@
             <section class="form-section">
                 <h2>Seu Pedido</h2>
                 
-                <div class="product-cards">
-                    <div class="product-card">
-                        <input type="checkbox" id="gas" name="gas" class="product-checkbox">
-                        <label for="gas" class="product-label">
-                            <i class="fas fa-fire"></i>
-                            <span>Gás</span>
-                        </label>
-                        <div class="quantity-control" id="gasQuantity" style="display: none;">
-                            <button type="button" class="quantity-btn minus"><i class="fas fa-minus"></i></button>
-                            <input type="number" name="gasQty" value="1" min="1" class="quantity-input">
-                            <button type="button" class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                <div class="step-indicator">
+                    <div class="step active">1. Selecione os produtos</div>
+                    <div class="step">2. Escolha as quantidades</div>
+                </div>
+                
+                <div class="product-selection">
+                    <div class="product-cards">
+                        <div class="product-card">
+                            <input type="checkbox" id="gas" name="gas" class="product-checkbox">
+                            <label for="gas" class="product-label">
+                                <i class="fas fa-fire"></i>
+                                <span>Gás</span>
+                                <div class="product-price">R$ 89,90</div>
+                            </label>
+                        </div>
+
+                        <div class="product-card">
+                            <input type="checkbox" id="water" name="water" class="product-checkbox">
+                            <label for="water" class="product-label">
+                                <i class="fas fa-water"></i>
+                                <span>Água 20L</span>
+                                <div class="product-price">A partir de R$ 7,90</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="selection-help">
+                        Clique nos produtos que deseja pedir
+                    </div>
+                </div>
+
+                <div class="quantities-container">
+                    <div class="step-indicator">
+                        <div class="step">1. Selecione os produtos</div>
+                        <div class="step active">2. Escolha as quantidades</div>
+                    </div>
+                    
+                    <div id="gasQuantity" class="quantity-control" style="display: none;">
+                        <div class="quantity-item">
+                            <label for="gasQty" class="quantity-label">Quantidade de Gás</label>
+                            <select name="gasQty" id="gasQty" class="quantity-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="product-card">
-                        <input type="checkbox" id="water" name="water" class="product-checkbox">
-                        <label for="water" class="product-label">
-                            <i class="fas fa-water"></i>
-                            <span>Água</span>
-                        </label>
-                        <div class="quantity-control" id="waterQuantity" style="display: none;">
-                            <button type="button" class="quantity-btn minus"><i class="fas fa-minus"></i></button>
-                            <input type="number" name="waterQty" value="1" min="1" class="quantity-input">
-                            <button type="button" class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                    <div id="waterQuantity" class="quantity-control" style="display: none;">
+                        <div class="quantity-item">
+                            <label for="waterQty" class="quantity-label">Quantidade de Água</label>
+                            <select name="waterQty" id="waterQty" class="quantity-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
                         </div>
+                    </div>
+                    
+                    <div class="water-brand-container">
+                        <h3>Escolha a marca da água:</h3>
+                        <div class="water-brands">
+                            <div class="brand-option">
+                                <input type="radio" id="lustral" name="waterBrand" value="Lustral" class="brand-radio" data-price="8.90">
+                                <label for="lustral" class="brand-label">
+                                    <span class="brand-name">Lustral</span>
+                                    <span class="brand-price">R$ 8,90</span>
+                                </label>
+                            </div>
+                            <div class="brand-option">
+                                <input type="radio" id="saloa" name="waterBrand" value="Saloá" class="brand-radio" data-price="7.90">
+                                <label for="saloa" class="brand-label">
+                                    <span class="brand-name">Saloá</span>
+                                    <span class="brand-price">R$ 7,90</span>
+                                </label>
+                            </div>
+                            <div class="brand-option">
+                                <input type="radio" id="santajoana" name="waterBrand" value="Santa Joana" class="brand-radio" data-price="9.90">
+                                <label for="santajoana" class="brand-label">
+                                    <span class="brand-name">Santa Joana</span>
+                                    <span class="brand-price">R$ 9,90</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-total">
+                        <div class="total-label">Total do Pedido:</div>
+                        <div class="total-value" id="orderTotal">R$ 0,00</div>
                     </div>
                 </div>
 
@@ -98,7 +176,9 @@
                     </div>
                     
                     <div id="changeContainer" style="display: none;">
-                        <input type="number" id="change" name="change" min="0" step="0.01" placeholder="Precisa de troco?">
+                        <label for="change">Troco para</label>
+                        <input type="text" id="change" name="change" placeholder="Precisa de troco?" class="currency-input">
+                        <div class="help-text">Coloque um valor maior que o total do pedido</div>
                     </div>
                 </div>
 

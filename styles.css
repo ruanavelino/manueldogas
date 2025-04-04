@@ -75,6 +75,50 @@ header {
     margin: 10px 0 5px 0;
 }
 
+/* Step indicator */
+.step-indicator {
+    display: flex;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 0.85rem;
+    position: relative;
+}
+
+.step.active {
+    background-color: rgba(243, 172, 36, 0.2);
+    color: #F3AC24;
+    font-weight: 600;
+}
+
+.step.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #F3AC24;
+}
+
+/* Selection help */
+.selection-help {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 8px 0 5px;
+    background-color: rgba(243, 172, 36, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
 /* Form controls */
 .form-row {
     display: flex;
@@ -127,28 +171,45 @@ textarea {
     opacity: 0.8;
 }
 
+/* Help text */
+.help-text {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 3px;
+    font-style: italic;
+}
+
 /* Product cards */
+.product-selection {
+    margin-bottom: 15px;
+}
+
 .product-cards {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .product-card {
     flex: 1;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 12px;
+    padding: 15px 10px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.2s;
     border: 2px solid transparent;
     cursor: pointer;
+    height: 100px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product-card:hover {
     border-color: #F3AC24; /* Amarelo para hover effect */
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .product-checkbox {
@@ -168,54 +229,186 @@ textarea {
 }
 
 .product-label i {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 5px;
     color: #F3AC24;
 }
 
+.product-price {
+    font-size: 0.8rem;
+    color: #F3AC24;
+    margin-top: 3px;
+}
+
 .product-card.active {
     border-color: #F3AC24;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 10px rgba(243, 172, 36, 0.5);
+    transform: scale(1.02);
 }
 
+/* Quantities container */
+.quantities-container {
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+    border-top: 2px solid #F3AC24;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Quantity controls */
 .quantity-control {
-    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.quantity-item {
+    display: grid;
+    grid-template-columns: auto 100px;
     align-items: center;
-    justify-content: center;
-    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 10px 15px;
 }
 
-.quantity-btn {
-    background-color: #F3AC24;
-    color: white;
-    border: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
+.quantity-label {
+    font-size: 0.95rem;
+    color: #F3AC24;
+    font-weight: 500;
 }
 
-.quantity-btn i {
-    font-size: 0.9rem;
-    color: white;
-}
-
-.quantity-btn:hover {
-    background-color: #d99714;
-}
-
-.quantity-input {
-    width: 40px;
-    text-align: center;
-    margin: 0 8px;
-    padding: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+.quantity-select {
+    width: 100%;
+    padding: 8px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #F3AC24;
+    color: #144F0B;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23144F0B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 12px;
+}
+
+.quantity-select:focus {
+    border-color: #F3AC24;
+    box-shadow: 0 0 0 2px rgba(243, 172, 36, 0.3);
+    outline: none;
+}
+
+/* Water brand selection */
+.water-brand-container {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 10px 15px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.water-brand-label {
+    display: block;
+    font-size: 0.95rem;
+    color: #F3AC24;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.water-brands {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.brand-option {
+    flex: 1;
+    min-width: 90px;
+    position: relative;
+}
+
+.brand-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.brand-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 8px 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.brand-label:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.brand-name {
+    font-weight: 500;
+}
+
+.brand-price {
+    font-size: 0.75rem;
+    color: #F3AC24;
+    margin-top: 3px;
+}
+
+.brand-radio:checked + .brand-label {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #F3AC24;
+    box-shadow: 0 0 5px rgba(243, 172, 36, 0.3);
+}
+
+/* Order total */
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-top: 15px;
+    border-left: 3px solid #F3AC24;
+}
+
+.total-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #F3AC24;
+}
+
+.total-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+}
+
+/* Currency input */
+.currency-input {
+    text-align: right;
+    padding-right: 15px !important;
+    font-weight: 500;
 }
 
 /* Payment options */
@@ -249,6 +442,7 @@ textarea {
 
 #changeContainer {
     margin-top: 8px;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 #change {
@@ -394,4 +588,14 @@ footer {
     .modal-buttons {
         flex-direction: row;
     }
-} 
+    
+    .quantity-item {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .quantity-label {
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+}

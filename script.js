@@ -4,29 +4,44 @@ const gasCheckbox = document.getElementById('gas');
 const waterCheckbox = document.getElementById('water');
 const gasQuantity = document.getElementById('gasQuantity');
 const waterQuantity = document.getElementById('waterQuantity');
+const waterBrandContainer = document.querySelector('.water-brand-container');
+const quantitiesContainer = document.querySelector('.quantities-container');
+const productSelection = document.querySelector('.product-selection');
 const paymentSelect = document.getElementById('paymentSelect');
 const changeContainer = document.getElementById('changeContainer');
+const orderTotalElement = document.getElementById('orderTotal');
 const submitButton = document.getElementById('submitOrder');
 const confirmationModal = document.getElementById('confirmationModal');
 const orderSummary = document.getElementById('orderSummary');
 const cancelButton = document.getElementById('cancelOrder');
 const confirmButton = document.getElementById('confirmOrder');
 
-// Phone number for WhatsApp
-const whatsappNumber = '5581971202071'; // Format: country code + number without special chars
+// Product prices
+const PRODUCT_PRICES = {
+    gas: 89.90,
+    waterLustral: 8.90,
+    waterSaloa: 7.90,
+    waterSantaJoana: 9.90
+};
 
-// Initialize input masks
+// Phone number for WhatsApp
+const whatsappNumber = '5581999993231'; // Format: country code + number without special chars
+
+// Initialize input masks and event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Set up input masks and event listeners
     setupInputMasks();
     setupEventListeners();
-    
-    // Make product cards clickable as a whole
     makeProductCardsClickable();
+    
+    // Initially hide quantities container
+    quantitiesContainer.style.display = 'none';
+    
+    // Set default water brand
+    document.getElementById('saloa').checked = true;
 });
 
 function setupInputMasks() {
-    // Phone mask
+    // Phone mask - limiting to digits and proper format
     const phoneInput = document.getElementById('phone');
     phoneInput.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
@@ -40,15 +55,37 @@ function setupInputMasks() {
             e.target.value = value;
         }
     });
+    
+    // Currency mask for change amount
+    const changeInput = document.getElementById('change');
+    changeInput.addEventListener('input', function(e) {
+        // Remove non-digit characters, keep only numbers
+        let value = e.target.value.replace(/\D/g, '');
+        
+        // Convert to cents then to BRL format with 2 decimal places
+        if (value) {
+            const cents = parseInt(value);
+            const reais = cents / 100;
+            e.target.value = formatCurrency(reais);
+        } else {
+            e.target.value = '';
+        }
+    });
+}
+
+function formatCurrency(value) {
+    return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
 
 function makeProductCardsClickable() {
     // Make the entire card clickable
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function(e) {
-            // Don't trigger if clicked on quantity controls
-            if (e.target.closest('.quantity-control')) return;
-            
             const checkbox = this.querySelector('.product-checkbox');
             checkbox.checked = !checkbox.checked;
             
@@ -62,12 +99,27 @@ function makeProductCardsClickable() {
 function setupEventListeners() {
     // Product selection
     gasCheckbox.addEventListener('change', function() {
-        toggleQuantityControl(this, gasQuantity);
+        toggleProductCard(this);
+        updateQuantitiesVisibility();
+        calculateTotal();
     });
 
     waterCheckbox.addEventListener('change', function() {
-        toggleQuantityControl(this, waterQuantity);
+        toggleProductCard(this);
+        updateQuantitiesVisibility();
+        calculateTotal();
     });
+    
+    // Water brand selection
+    document.querySelectorAll('.brand-radio').forEach(radio => {
+        radio.addEventListener('change', function() {
+            calculateTotal();
+        });
+    });
+    
+    // Quantity changes
+    document.getElementById('gasQty').addEventListener('change', calculateTotal);
+    document.getElementById('waterQty').addEventListener('change', calculateTotal);
 
     // Payment method selection
     paymentSelect.addEventListener('change', function() {
@@ -76,21 +128,6 @@ function setupEventListeners() {
         } else {
             changeContainer.style.display = 'none';
         }
-    });
-
-    // Set up quantity control buttons
-    document.querySelectorAll('.quantity-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent triggering the card click
-            const input = this.parentElement.querySelector('.quantity-input');
-            const currentValue = parseInt(input.value);
-            
-            if (this.classList.contains('plus')) {
-                input.value = currentValue + 1;
-            } else if (this.classList.contains('minus') && currentValue > 1) {
-                input.value = currentValue - 1;
-            }
-        });
     });
 
     // Form submission
@@ -117,14 +154,78 @@ function setupEventListeners() {
     });
 }
 
-function toggleQuantityControl(checkbox, quantityControl) {
+function toggleProductCard(checkbox) {
+    const card = checkbox.parentElement;
     if (checkbox.checked) {
-        quantityControl.style.display = 'flex';
-        checkbox.parentElement.classList.add('active');
+        card.classList.add('active');
     } else {
-        quantityControl.style.display = 'none';
-        checkbox.parentElement.classList.remove('active');
+        card.classList.remove('active');
     }
+}
+
+function updateQuantitiesVisibility() {
+    // Show/hide individual quantity controls
+    gasQuantity.style.display = gasCheckbox.checked ? 'block' : 'none';
+    waterQuantity.style.display = waterCheckbox.checked ? 'block' : 'none';
+    
+    // Show/hide the water brand container based on water checkbox
+    waterBrandContainer.style.display = waterCheckbox.checked ? 'block' : 'none';
+    
+    // Show/hide the quantities container based on selections
+    if (gasCheckbox.checked || waterCheckbox.checked) {
+        quantitiesContainer.style.display = 'block';
+        productSelection.querySelector('.step-indicator .step:first-child').classList.remove('active');
+        productSelection.querySelector('.step-indicator .step:last-child').classList.add('active');
+    } else {
+        quantitiesContainer.style.display = 'none';
+    }
+}
+
+function calculateTotal() {
+    let total = 0;
+    
+    // Calculate gas total
+    if (gasCheckbox.checked) {
+        const gasQty = parseInt(document.getElementById('gasQty').value) || 0;
+        total += PRODUCT_PRICES.gas * gasQty;
+    }
+    
+    // Calculate water total
+    if (waterCheckbox.checked) {
+        const waterQty = parseInt(document.getElementById('waterQty').value) || 0;
+        const selectedBrand = document.querySelector('input[name="waterBrand"]:checked');
+        
+        if (selectedBrand) {
+            // Get the selected water brand price
+            let waterPrice;
+            switch (selectedBrand.value) {
+                case 'Lustral':
+                    waterPrice = PRODUCT_PRICES.waterLustral;
+                    break;
+                case 'Saloá':
+                    waterPrice = PRODUCT_PRICES.waterSaloa;
+                    break;
+                case 'Santa Joana':
+                    waterPrice = PRODUCT_PRICES.waterSantaJoana;
+                    break;
+                default:
+                    waterPrice = PRODUCT_PRICES.waterSaloa; // Default to cheapest
+            }
+            
+            total += waterPrice * waterQty;
+        }
+    }
+    
+    // Update the total display
+    orderTotalElement.textContent = formatCurrency(total);
+    
+    // Store the calculated total as a data attribute for easy access
+    orderTotalElement.dataset.totalValue = total;
+}
+
+function getSelectedWaterBrand() {
+    const selectedBrand = document.querySelector('input[name="waterBrand"]:checked');
+    return selectedBrand ? selectedBrand.value : null;
 }
 
 function validateForm() {
@@ -143,9 +244,9 @@ function validateForm() {
         }
     });
 
-    // Phone validation
+    // Phone validation - must have at least 14 chars including formatting
     const phoneInput = document.getElementById('phone');
-    if (phoneInput.value.replace(/\D/g, '').length < 11) {
+    if (phoneInput.value.length < 14) {
         showError(phoneInput, 'Telefone inválido');
         isValid = false;
     }
@@ -153,6 +254,12 @@ function validateForm() {
     // Product selection validation
     if (!gasCheckbox.checked && !waterCheckbox.checked) {
         showError(document.querySelector('.product-cards'), 'Selecione pelo menos um produto');
+        isValid = false;
+    }
+    
+    // Water brand validation
+    if (waterCheckbox.checked && !getSelectedWaterBrand()) {
+        showError(document.querySelector('.water-brands'), 'Selecione uma marca de água');
         isValid = false;
     }
 
@@ -168,10 +275,24 @@ function validateForm() {
         if (!changeInput.value) {
             showError(changeInput, 'Informe o valor para troco');
             isValid = false;
+        } else {
+            // Validate if the change amount is sufficient
+            const orderTotal = parseFloat(orderTotalElement.dataset.totalValue);
+            const changeValue = parseCurrencyValue(changeInput.value);
+            
+            if (changeValue < orderTotal) {
+                showError(changeInput, 'O valor para troco deve ser maior ou igual ao total do pedido');
+                isValid = false;
+            }
         }
     }
 
     return isValid;
+}
+
+function parseCurrencyValue(currencyString) {
+    // Remove currency symbol, dots and convert comma to dot for proper parsing
+    return parseFloat(currencyString.replace(/[^\d,]/g, '').replace(',', '.'));
 }
 
 function showError(element, message) {
@@ -193,12 +314,14 @@ function showConfirmationModal() {
     
     const gasOrdered = gasCheckbox.checked;
     const waterOrdered = waterCheckbox.checked;
-    const gasQty = gasOrdered ? document.querySelector('input[name="gasQty"]').value : 0;
-    const waterQty = waterOrdered ? document.querySelector('input[name="waterQty"]').value : 0;
+    const gasQty = gasOrdered ? document.getElementById('gasQty').value : 0;
+    const waterQty = waterOrdered ? document.getElementById('waterQty').value : 0;
+    const waterBrand = waterOrdered ? getSelectedWaterBrand() : '';
     
     const observation = document.getElementById('observation').value || 'Nenhuma';
     const paymentMethod = paymentSelect.value;
     const change = (paymentMethod === 'Dinheiro') ? document.getElementById('change').value : 'N/A';
+    const total = orderTotalElement.textContent;
 
     // Format order summary
     const addressLine = `${street}, ${number}, ${neighborhood}, Gravatá/PE`;
@@ -216,21 +339,39 @@ function showConfirmationModal() {
     summaryHTML += `<p><strong>Pedido:</strong></p>`;
 
     if (gasOrdered) {
-        summaryHTML += `<p>- Gás: ${gasQty} botijão(ões)</p>`;
+        summaryHTML += `<p>- Gás: ${gasQty} botijão(ões) - ${formatCurrency(gasQty * PRODUCT_PRICES.gas)}</p>`;
     }
     
     if (waterOrdered) {
-        summaryHTML += `<p>- Água: ${waterQty} galão(ões)</p>`;
+        let waterPrice;
+        switch (waterBrand) {
+            case 'Lustral':
+                waterPrice = PRODUCT_PRICES.waterLustral;
+                break;
+            case 'Saloá':
+                waterPrice = PRODUCT_PRICES.waterSaloa;
+                break;
+            case 'Santa Joana':
+                waterPrice = PRODUCT_PRICES.waterSantaJoana;
+                break;
+            default:
+                waterPrice = 0;
+        }
+        
+        summaryHTML += `<p>- Água: ${waterQty} galão(ões) ${waterBrand} - ${formatCurrency(waterQty * waterPrice)}</p>`;
     }
 
     if (observation !== 'Nenhuma') {
         summaryHTML += `<p><strong>Observação:</strong> ${observation}</p>`;
     }
 
-    summaryHTML += `<p><strong>Pagamento:</strong> ${paymentMethod}</p>`;
+    summaryHTML += `
+        <p><strong>Pagamento:</strong> ${paymentMethod}</p>
+        <p><strong>Total do Pedido:</strong> ${total}</p>
+    `;
 
     if (paymentMethod === 'Dinheiro') {
-        summaryHTML += `<p><strong>Troco para:</strong> R$ ${change}</p>`;
+        summaryHTML += `<p><strong>Troco para:</strong> ${change}</p>`;
     }
 
     // Update modal content
@@ -251,12 +392,14 @@ function sendToWhatsApp() {
     
     const gasOrdered = gasCheckbox.checked;
     const waterOrdered = waterCheckbox.checked;
-    const gasQty = gasOrdered ? document.querySelector('input[name="gasQty"]').value : 0;
-    const waterQty = waterOrdered ? document.querySelector('input[name="waterQty"]').value : 0;
+    const gasQty = gasOrdered ? document.getElementById('gasQty').value : 0;
+    const waterQty = waterOrdered ? document.getElementById('waterQty').value : 0;
+    const waterBrand = waterOrdered ? getSelectedWaterBrand() : '';
     
     const observation = document.getElementById('observation').value || 'Nenhuma';
     const paymentMethod = paymentSelect.value;
     const change = (paymentMethod === 'Dinheiro') ? document.getElementById('change').value : 'N/A';
+    const total = orderTotalElement.textContent;
 
     // Format WhatsApp message
     const addressLine = `${street}, ${number}, ${neighborhood}, Gravatá/PE`;
@@ -277,7 +420,7 @@ function sendToWhatsApp() {
     }
     
     if (waterOrdered) {
-        message += `- Água: ${waterQty} galão(ões)\n`;
+        message += `- Água: ${waterQty} galão(ões) ${waterBrand}\n`;
     }
     
     if (observation !== 'Nenhuma') {
@@ -285,9 +428,10 @@ function sendToWhatsApp() {
     }
     
     message += `Pagamento: ${paymentMethod}\n`;
+    message += `Total do Pedido: ${total}\n`;
     
     if (paymentMethod === 'Dinheiro') {
-        message += `Troco para: R$ ${change}`;
+        message += `Troco para: ${change}`;
     }
 
     // Encode message for URL
@@ -304,6 +448,12 @@ function sendToWhatsApp() {
     form.reset();
     gasQuantity.style.display = 'none';
     waterQuantity.style.display = 'none';
+    waterBrandContainer.style.display = 'none';
+    quantitiesContainer.style.display = 'none';
     changeContainer.style.display = 'none';
     document.querySelectorAll('.product-card').forEach(card => card.classList.remove('active'));
+    orderTotalElement.textContent = formatCurrency(0);
+    
+    // Reset default water brand
+    document.getElementById('saloa').checked = true;
 } 
