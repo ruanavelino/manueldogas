@@ -1,0 +1,70 @@
+Aqui está um prompt detalhado e bem estruturado para o Claude 3.7, seguindo suas instruções:
+
+---
+
+**Prompt para Claude 3.7:**
+
+"Crie um código HTML/CSS/JavaScript para uma página web única otimizada para dispositivos móveis, destinada a uma empresa chamada 'Manuel do Gás', localizada em Gravatá/PE, que atua como distribuidora de gás e galões de água. A página deve funcionar como um formulário de pedidos no estilo CRUD, coletando dados essenciais para pedidos de gás e água, e ser totalmente responsiva para uso em telefones, já que será divulgada via link na bio do Instagram e tráfego pago.
+
+### Requisitos da página:
+1. **Estrutura do formulário:**
+   - **Dados pessoais:**
+     - Nome completo (obrigatório)
+     - Telefone (obrigatório, formato: (XX) XXXXX-XXXX)
+     - CPF (opcional, formato: XXX.XXX.XXX-XX)
+   - **Endereço:**
+     - Rua (obrigatório)
+     - Número (obrigatório)
+     - Complemento (opcional)
+     - Bairro (obrigatório)
+     - Ponto de referência (opcional)
+   - **Pedido:**
+     - Seleção de produto Gás/Água através de um card com um checkbox e um ícone representando galão de água e botijão de gás (procure os icones na web se necessário)
+     - Observação (campo de texto opcional para detalhes adicionais)
+   - **Forma de pagamento:**
+     - Seleção única: Dinheiro (abre opção de troco caso selecionado dinheiro), Cartão de Crédito/Débito, Pix
+   - O usuário deve poder pedir gás, água ou ambos e escolher a quantidade de cada item em um único formulário.
+
+2. **Design:**
+   - **Cor de fundo:** #F0F8FF (Alice Blue)
+   - **Cor primária dos botões:** #144F0B (verde escuro)
+   - **Cor secundária (efeitos/hover):** #F3AC24 (amarelo)
+   - Use uma fonte limpa e legível (ex.: 'Arial' ou 'Roboto') para facilitar a leitura em telas pequenas.
+   - Layout simples, com campos bem espaçados e botões grandes para fácil interação em dispositivos móveis.
+
+3. **Funcionalidade:**
+   - Após o preenchimento, ao clicar no botão 'Enviar Pedido', o formulário deve:
+     - Validar os campos obrigatórios (exibir mensagem de erro se estiverem vazios).
+     - Formatatar os dados em uma mensagem estruturada (exemplo abaixo).
+     - Abrir o WhatsApp com a mensagem pré-pronta e enviá-la para o número (81)99999-3231.
+
+4. **Exemplo de mensagem formatada para o WhatsApp:**
+   ```
+   Novo Pedido - Manuel do Gás
+   Nome: [Nome do cliente]
+   Telefone: [Telefone]
+   CPF: [CPF ou 'Não informado']
+   Endereço: [Rua], [Número], [Complemento], [Bairro], Gravatá/PE
+   Ponto de Referência: [Ponto ou 'Não informado']
+   Pedido:
+   - Gás: [Quantidade] botijão(ões)
+   - Água: [Quantidade] galão(ões)
+   Observação: [Observação ou 'Nenhuma']
+   Forma de Pagamento: [Selecionada]
+   ```
+
+5. **Otimizações para mobile:**
+   - Use meta tags para responsividade (viewport).
+   - Campos de entrada com tamanho adequado para dedos (mínimo 48px de altura).
+   - Evite rolagem horizontal e priorize um layout vertical fluido.
+   - Carregamento rápido
+   - Botões grandes para fácil interação
+   - Feedback visual ao preencher campos
+
+Confirmação antes de enviar
+
+6. **Toque final:**
+   - Inclua um rodapé com 'Gravatá/PE - (81)99999-3231' em tamanho menor.
+   - Logo da empresa no topo centralizado
+   - Texto simples: "Seu pedido de gás e água rápido e fácil!" no rodapé
+   - Instruções claras em cada seção

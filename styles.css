@@ -1,0 +1,397 @@
+/* Base styles and reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F0F8FF; /* Alice Blue as specified */
+    color: #333;
+    line-height: 1.4;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Header styles */
+header {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.logo-image {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+    object-fit: contain;
+}
+
+.logo h1 {
+    color: #144F0B; /* Verde escuro */
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Form sections */
+.form-section {
+    background-color: #144F0B; /* Verde primário como background */
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.form-section h2 {
+    color: #F3AC24; /* Títulos em amarelo secundário */
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-section h3 {
+    color: #F3AC24; /* Subtítulos em amarelo secundário */
+    font-size: 1.1rem;
+    margin: 10px 0 5px 0;
+}
+
+/* Form controls */
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+    min-height: 40px; /* Reduced height but still mobile-friendly */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #F3AC24;
+    box-shadow: 0 0 0 2px rgba(243, 172, 36, 0.3);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+::placeholder {
+    color: #888;
+    opacity: 0.8;
+}
+
+/* Product cards */
+.product-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.product-card {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    border-color: #F3AC24; /* Amarelo para hover effect */
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.product-checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.product-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.product-label i {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: #F3AC24;
+}
+
+.product-card.active {
+    border-color: #F3AC24;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.quantity-btn {
+    background-color: #F3AC24;
+    color: white;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.quantity-btn i {
+    font-size: 0.9rem;
+    color: white;
+}
+
+.quantity-btn:hover {
+    background-color: #d99714;
+}
+
+.quantity-input {
+    width: 40px;
+    text-align: center;
+    margin: 0 8px;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Payment options */
+.payment-container {
+    margin-bottom: 15px;
+}
+
+.payment-method-select {
+    margin-bottom: 10px;
+}
+
+.payment-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+    font-size: 0.95rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23144F0B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.payment-select:hover {
+    border-color: #F3AC24;
+}
+
+#changeContainer {
+    margin-top: 8px;
+}
+
+#change {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-height: 45px;
+}
+
+.primary-btn {
+    background-color: #F3AC24; /* Amarelo para botão principal */
+    color: #144F0B; /* Texto verde escuro */
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background-color: #d99714;
+}
+
+.secondary-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.secondary-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.form-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.form-controls .btn {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #F0F8FF;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal h2 {
+    color: #144F0B;
+    margin-bottom: 15px;
+}
+
+#orderSummary {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.modal-buttons .btn {
+    flex: 1;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Error styling */
+.error {
+    border-color: #ff3b30 !important;
+}
+
+.error-message {
+    color: #ff3b30;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-section {
+        padding: 12px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .modal-content {
+        padding: 15px;
+        width: 95%;
+    }
+    
+    .product-cards {
+        flex-direction: row;
+    }
+    
+    .modal-buttons {
+        flex-direction: row;
+    }
+} 

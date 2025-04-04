@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel do Gás - Pedidos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://i.ibb.co/NWXWLYg/gas-logo.png" alt="Manuel do Gás" class="logo-image">
+                <h1>Manuel do Gás</h1>
+            </div>
+            <p class="tagline">Seu pedido de gás e água rápido e fácil!</p>
+        </header>
+
+        <form id="orderForm">
+            <section class="form-section">
+                <h2>Dados Pessoais & Endereço</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nome*</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone*</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="street">Rua*</label>
+                        <input type="text" id="street" name="street" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="number">Número*</label>
+                        <input type="text" id="number" name="number" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="neighborhood">Bairro*</label>
+                        <input type="text" id="neighborhood" name="neighborhood" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference">Referência</label>
+                        <input type="text" id="reference" name="reference" placeholder="Próximo a...">
+                    </div>
+                </div>
+            </section>
+
+            <section class="form-section">
+                <h2>Seu Pedido</h2>
+                
+                <div class="product-cards">
+                    <div class="product-card">
+                        <input type="checkbox" id="gas" name="gas" class="product-checkbox">
+                        <label for="gas" class="product-label">
+                            <i class="fas fa-fire"></i>
+                            <span>Gás</span>
+                        </label>
+                        <div class="quantity-control" id="gasQuantity" style="display: none;">
+                            <button type="button" class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" name="gasQty" value="1" min="1" class="quantity-input">
+                            <button type="button" class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <input type="checkbox" id="water" name="water" class="product-checkbox">
+                        <label for="water" class="product-label">
+                            <i class="fas fa-water"></i>
+                            <span>Água</span>
+                        </label>
+                        <div class="quantity-control" id="waterQuantity" style="display: none;">
+                            <button type="button" class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" name="waterQty" value="1" min="1" class="quantity-input">
+                            <button type="button" class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-container">
+                    <h3>Pagamento</h3>
+                    <div class="payment-method-select">
+                        <select id="paymentSelect" class="payment-select">
+                            <option value="" disabled selected>Selecione a forma de pagamento</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Pix">Pix</option>
+                        </select>
+                    </div>
+                    
+                    <div id="changeContainer" style="display: none;">
+                        <input type="number" id="change" name="change" min="0" step="0.01" placeholder="Precisa de troco?">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observation">Observação</label>
+                    <textarea id="observation" name="observation" rows="2" placeholder="Alguma informação adicional? Ex: botijão vazio disponível, entrega no portão, etc."></textarea>
+                </div>
+            </section>
+
+            <div class="form-controls">
+                <button type="button" id="submitOrder" class="btn primary-btn">Enviar Pedido</button>
+            </div>
+
+            <div id="confirmationModal" class="modal">
+                <div class="modal-content">
+                    <h2>Confirmação do Pedido</h2>
+                    <div id="orderSummary"></div>
+                    <div class="modal-buttons">
+                        <button type="button" id="cancelOrder" class="btn secondary-btn">Editar</button>
+                        <button type="button" id="confirmOrder" class="btn primary-btn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <footer>
+            <p>Gravatá/PE - (81)99999-3231</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
