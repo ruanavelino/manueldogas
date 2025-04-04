@@ -25,7 +25,7 @@ const PRODUCT_PRICES = {
 };
 
 // Phone number for WhatsApp
-const whatsappNumber = '5581971202071'; // Format: country code + number without special chars
+const whatsappNumber = '5581999993231'; // Format: country code + number without special chars
 
 // Initialize input masks and event listeners
 document.addEventListener('DOMContentLoaded', function() {
@@ -87,7 +87,12 @@ function makeProductCardsClickable() {
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function(e) {
             const checkbox = this.querySelector('.product-checkbox');
+            
+            // Toggle the checkbox state
             checkbox.checked = !checkbox.checked;
+            
+            // Update the card appearance immediately
+            toggleProductCard(checkbox);
             
             // Trigger the change event manually
             const event = new Event('change');
@@ -155,7 +160,7 @@ function setupEventListeners() {
 }
 
 function toggleProductCard(checkbox) {
-    const card = checkbox.parentElement;
+    const card = checkbox.closest('.product-card');
     if (checkbox.checked) {
         card.classList.add('active');
     } else {
@@ -174,10 +179,16 @@ function updateQuantitiesVisibility() {
     // Show/hide the quantities container based on selections
     if (gasCheckbox.checked || waterCheckbox.checked) {
         quantitiesContainer.style.display = 'block';
-        productSelection.querySelector('.step-indicator .step:first-child').classList.remove('active');
-        productSelection.querySelector('.step-indicator .step:last-child').classList.add('active');
+        if (productSelection.querySelector('.step-indicator')) {
+            productSelection.querySelector('.step-indicator .step:first-child').classList.remove('active');
+            productSelection.querySelector('.step-indicator .step:last-child').classList.add('active');
+        }
     } else {
         quantitiesContainer.style.display = 'none';
+        if (productSelection.querySelector('.step-indicator')) {
+            productSelection.querySelector('.step-indicator .step:first-child').classList.add('active');
+            productSelection.querySelector('.step-indicator .step:last-child').classList.remove('active');
+        }
     }
 }
 
@@ -451,7 +462,12 @@ function sendToWhatsApp() {
     waterBrandContainer.style.display = 'none';
     quantitiesContainer.style.display = 'none';
     changeContainer.style.display = 'none';
-    document.querySelectorAll('.product-card').forEach(card => card.classList.remove('active'));
+    
+    // Reset all card appearances
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    
     orderTotalElement.textContent = formatCurrency(0);
     
     // Reset default water brand
