@@ -97,6 +97,9 @@ function makeProductCardsClickable() {
             // Trigger the change event manually
             const event = new Event('change');
             checkbox.dispatchEvent(event);
+            
+            // Remove focus from the card to prevent focus outline
+            this.blur();
         });
     });
 }

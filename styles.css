@@ -209,12 +209,26 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: none; /* Remove outline padrão do navegador */
 }
 
 .product-card:hover {
     border-color: #F3AC24; /* Amarelo para hover effect */
     background-color: #126309; /* Verde um pouco mais claro no hover */
     transform: translateY(-2px);
+}
+
+/* Remove efeitos de foco indesejados */
+.product-card:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: none;
+    transform: none;
+}
+
+.product-card:focus:not(.active) {
+    background-color: #0E5306; /* Verde normal para cards não ativos */
+    border-color: transparent;
 }
 
 .product-checkbox {
