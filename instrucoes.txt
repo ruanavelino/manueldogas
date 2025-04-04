@@ -36,7 +36,7 @@ Aqui está um prompt detalhado e bem estruturado para o Claude 3.7, seguindo sua
    - Após o preenchimento, ao clicar no botão 'Enviar Pedido', o formulário deve:
      - Validar os campos obrigatórios (exibir mensagem de erro se estiverem vazios).
      - Formatatar os dados em uma mensagem estruturada (exemplo abaixo).
-     - Abrir o WhatsApp com a mensagem pré-pronta e enviá-la para o número (81)99999-3231.
+     - Abrir o WhatsApp com a mensagem pré-pronta e enviá-la para o número (81)97120-2071.
 
 4. **Exemplo de mensagem formatada para o WhatsApp:**
    ```
@@ -64,7 +64,7 @@ Aqui está um prompt detalhado e bem estruturado para o Claude 3.7, seguindo sua
 Confirmação antes de enviar
 
 6. **Toque final:**
-   - Inclua um rodapé com 'Gravatá/PE - (81)99999-3231' em tamanho menor.
+   - Inclua um rodapé com 'Gravatá/PE - (81)9.7120-2071' em tamanho menor.
    - Logo da empresa no topo centralizado
    - Texto simples: "Seu pedido de gás e água rápido e fácil!" no rodapé
    - Instruções claras em cada seção

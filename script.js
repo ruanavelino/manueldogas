@@ -25,7 +25,7 @@ const PRODUCT_PRICES = {
 };
 
 // Phone number for WhatsApp
-const whatsappNumber = '5581999993231'; // Format: country code + number without special chars
+const whatsappNumber = '5581971202071'; // Format: country code + number without special chars
 
 // Initialize input masks and event listeners
 document.addEventListener('DOMContentLoaded', function() {
@@ -333,6 +333,18 @@ function showConfirmationModal() {
     const paymentMethod = paymentSelect.value;
     const change = (paymentMethod === 'Dinheiro') ? document.getElementById('change').value : 'N/A';
     const total = orderTotalElement.textContent;
+    
+    // Calculate change amount if payment is cash
+    let changeAmount = '';
+    if (paymentMethod === 'Dinheiro') {
+        const totalValue = parseFloat(orderTotalElement.dataset.totalValue);
+        const changeValue = parseCurrencyValue(change);
+        const actualChange = changeValue - totalValue;
+        
+        if (actualChange >= 0) {
+            changeAmount = formatCurrency(actualChange);
+        }
+    }
 
     // Format order summary
     const addressLine = `${street}, ${number}, ${neighborhood}, Gravatá/PE`;
@@ -383,6 +395,7 @@ function showConfirmationModal() {
 
     if (paymentMethod === 'Dinheiro') {
         summaryHTML += `<p><strong>Troco para:</strong> ${change}</p>`;
+        summaryHTML += `<p><strong>Valor do Troco:</strong> ${changeAmount}</p>`;
     }
 
     // Update modal content
@@ -411,6 +424,18 @@ function sendToWhatsApp() {
     const paymentMethod = paymentSelect.value;
     const change = (paymentMethod === 'Dinheiro') ? document.getElementById('change').value : 'N/A';
     const total = orderTotalElement.textContent;
+
+    // Calculate change amount if payment is cash
+    let changeAmount = '';
+    if (paymentMethod === 'Dinheiro') {
+        const totalValue = parseFloat(orderTotalElement.dataset.totalValue);
+        const changeValue = parseCurrencyValue(change);
+        const actualChange = changeValue - totalValue;
+        
+        if (actualChange >= 0) {
+            changeAmount = formatCurrency(actualChange);
+        }
+    }
 
     // Format WhatsApp message
     const addressLine = `${street}, ${number}, ${neighborhood}, Gravatá/PE`;
@@ -442,7 +467,8 @@ function sendToWhatsApp() {
     message += `Total do Pedido: ${total}\n`;
     
     if (paymentMethod === 'Dinheiro') {
-        message += `Troco para: ${change}`;
+        message += `Troco para: ${change}\n`;
+        message += `Valor do Troco: ${changeAmount}`;
     }
 
     // Encode message for URL
